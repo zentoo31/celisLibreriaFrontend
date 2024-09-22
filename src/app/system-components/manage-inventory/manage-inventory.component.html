@@ -1,0 +1,46 @@
+<div class="flex w-full">
+    <div class="relative overflow-x-auto overflow-y-scroll max-h-screen w-11/12">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        Nombre
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Descripcion
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Precio
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Stock
+                    </th>
+                </tr>
+            </thead>
+            @for (item of productsList; track $index) {
+                <tbody>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{item.nombre}}
+                        </th>
+                        <td class="px-6 py-4">
+                            {{item.descripcion}}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{item.precio}}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{item.stock}}
+                        </td>
+                    </tr>
+                </tbody>
+            }
+        </table>
+    </div>
+    <div class= "w-1/12 bg-gray-100 p-4 flex flex-col space-x-2">
+        <h2 class="mb-3">Opciones</h2>
+        <button class="bg-slate-700 rounded text-white p-2 mb-3">Añadir</button>
+        <button class="bg-slate-700 rounded text-white p-2 mb-3">Actualizar</button>
+        <button class="bg-slate-700 rounded text-white p-2 mb-3">Eliminar</button>
+    </div>
+</div>
