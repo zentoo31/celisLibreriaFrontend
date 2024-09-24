@@ -1,5 +1,5 @@
 <div class="flex items-center justify-center min-h-screen bg-gray-100">
-    <div class="w-full max-w-md bg-white rounded-lg shadow-md p-8">
+    <div class="w-full max-w-md bg-white rounded-lg shadow-md p-8 animate-fade-in-down">
         <div class="flex justify-center mb-4">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-12 w-12 text-slate-900">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
@@ -15,13 +15,14 @@
             <button class="flex-1 py-2" (click)="isLogin = true" [class.bg-slate-900] = "isLogin"  [class.bg-gray-200] = "!isLogin" [class.text-white] = "isLogin" >Registrarse</button>
         </div>
 
-        <form action="">
+        <form [formGroup]="regiterForm" (ngSubmit)="onRegister()">
             @if (isLogin) {
-                <div class="mb-4">
+                <div class="mb-4 ">
                     <label htmlFor="name" class="block text-gray-700 text-sm font-bold mb-2">
                         Nombre Completo
                     </label>
                     <input
+                    formControlName = "nombre"
                     type="text"
                     id="name"
                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
@@ -33,6 +34,7 @@
                     Correo Electrónico
                 </label>
                 <input
+                formControlName = "correo"
                 type="email"
                 id="email"
                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
@@ -44,6 +46,7 @@
                     Contraseña
                 </label>
                 <input
+                formControlName = "password"
                 type="password"
                 id="password"
                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
@@ -52,15 +55,16 @@
             @if (isLogin) {
                 <button
                 type="submit"
-                class="w-full bg-slate-900 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50 disabled:opacity-50"
+                class="w-full bg-slate-900 text-white py-2 px-4 rounded-md hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-600 focus:ring-opacity-50 disabled:opacity-50"
                 >Registrarse</button>
             }@else {
                 <button
                 type="submit"
-                class="w-full bg-slate-900 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50 disabled:opacity-50"
+                class="w-full bg-slate-900 text-white py-2 px-4 rounded-md hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-600 focus:ring-opacity-50 disabled:opacity-50"
                 > Iniciar Sesión</button>
             }
             <a [routerLink]="['/system']">Entrar modo desarrollador</a>
         </form>
     </div>
+    <app-toast/>
 </div>
