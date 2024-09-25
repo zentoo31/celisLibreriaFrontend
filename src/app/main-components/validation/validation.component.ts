@@ -35,12 +35,16 @@ export class ValidationComponent {
   async onRegister(){
     if (this.regiterForm.valid && this.isLogin) {
       const formValue = this.regiterForm.value;
-      const response = await this.userService.register(formValue);
+       try {
+        const response = await this.userService.register(formValue);
         if (response === true) {
           this.showToast('Usuario registrado con éxito!!');
-        }else if (response === HttpErrorResponse){
+        }else {
           this.showToast('Registro fallido!!');
         }
+       } catch (error:any) {
+          this.showToast(`${error.error.message}`)
+       }
     }
   }
 
