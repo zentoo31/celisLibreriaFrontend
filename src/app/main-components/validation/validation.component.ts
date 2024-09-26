@@ -33,18 +33,31 @@ export class ValidationComponent {
   });
 
   async onRegister(){
-    if (this.regiterForm.valid && this.isLogin) {
-      const formValue = this.regiterForm.value;
-       try {
-        const response = await this.userService.register(formValue);
-        if (response === true) {
-          this.showToast('Usuario registrado con éxito!!');
-        }else {
-          this.showToast('Registro fallido!!');
-        }
-       } catch (error:any) {
+    if(this.isLogin){
+      if (this.regiterForm.valid && this.isLogin) {
+        const formValue = this.regiterForm.value;
+         try {
+          const response = await this.userService.register(formValue);
+          if (response === true) {
+            this.showToast('Usuario registrado con éxito!!');
+          }else {
+            this.showToast('Registro fallido!!');
+          }
+         } catch (error:any) {
+            this.showToast(`${error.error.message}`)
+         }
+      }
+    }else{
+      if (this.regiterForm.valid) {
+        const formValue = this.regiterForm.value;
+        try {
+          const response = await this.userService.login(formValue);
+          this.showToast(response.message);
+        } catch (error:any) {
           this.showToast(`${error.error.message}`)
-       }
+        }
+        
+      }
     }
   }
 
