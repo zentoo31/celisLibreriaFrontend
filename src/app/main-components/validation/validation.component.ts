@@ -1,10 +1,9 @@
 import { Component, inject, ViewChild, viewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { UserService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { ToastComponent } from '../../util-components/toast/toast.component';
 import { ToastService } from '../../services/toast.service';
-import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-validation',
   standalone: true,
@@ -15,7 +14,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class ValidationComponent {
   @ViewChild(ToastComponent) toast!: ToastComponent;
   isLogin: boolean  = false;
-  userService = inject(UserService);
+  authService = inject(AuthService);
   toastService = inject(ToastService);
 
   ngAfterViewInit() {
@@ -26,39 +25,41 @@ export class ValidationComponent {
     this.toastService.show(message);
   }
 
-  regiterForm = new FormGroup({
+  authForm = new FormGroup({
     nombre: new FormControl('',this.isLogin ? Validators.required: []),
     correo: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(8)])
   });
 
-  async onRegister(){
-    if(this.isLogin){
-      if (this.regiterForm.valid && this.isLogin) {
-        const formValue = this.regiterForm.value;
-         try {
-          const response = await this.userService.register(formValue);
-          if (response === true) {
-            this.showToast('Usuario registrado con éxito!!');
-          }else {
-            this.showToast('Registro fallido!!');
-          }
-         } catch (error:any) {
-            this.showToast(`${error.error.message}`)
-         }
-      }
-    }else{
-      if (this.regiterForm.valid) {
-        const formValue = this.regiterForm.value;
-        try {
-          const response = await this.userService.login(formValue);
-          this.showToast(response.message);
-        } catch (error:any) {
-          this.showToast(`${error.error.message}`)
+  async Auth() {
+    if (this.authForm.valid) {
+      const formValue = this.authForm.value;
+      try {
+        if (this.isLogin) {
+          await this.register(formValue);
+        } else {
+          await this.login(formValue);
         }
-        
+      } catch (error: any) {
+        this.showToast(`${error.error.message}`);
       }
     }
   }
+  
+  private async register(formValue: any) {
+    const response = await this.authService.register(formValue);
+    if (response === true) {
+      this.showToast('Usuario registrado con éxito!!');
+      this.isLogin = false;
+    } else {
+      this.showToast('Registro fallido!!');
+    }
+  }
+  
+  private async login(formValue: any) {
+    const response = await this.authService.login(formValue);
+    this.showToast(response.message);
+  }
+  
 
 }

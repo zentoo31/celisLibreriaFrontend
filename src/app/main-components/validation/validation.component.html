@@ -15,7 +15,7 @@
             <button class="flex-1 py-2" (click)="isLogin = true" [class.bg-slate-900] = "isLogin"  [class.bg-gray-200] = "!isLogin" [class.text-white] = "isLogin" >Registrarse</button>
         </div>
 
-        <form [formGroup]="regiterForm" (ngSubmit)="onRegister()">
+        <form [formGroup]="authForm" (ngSubmit)="Auth()">
             @if (isLogin) {
                 <div class="mb-4 ">
                     <label htmlFor="name" class="block text-gray-700 text-sm font-bold mb-2">
