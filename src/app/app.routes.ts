@@ -5,16 +5,18 @@ import { ManageInventoryComponent } from './system-components/manage-inventory/m
 import { SalesHistoryComponent } from './system-components/sales-history/sales-history.component';
 import { SalesAnalysisComponent } from './system-components/sales-analysis/sales-analysis.component';
 import { SupplierDataComponent } from './system-components/supplier-data/supplier-data.component';
+import { authGuard } from './guards/auth.guard';
+
 export const routes: Routes = [
     {path: "home", component: ValidationComponent},
-    {path: "system", component: SystemComponent,
+    {path: "system", component: SystemComponent, canActivate: [authGuard],
         children:[
             {path: "", redirectTo: "manage-inventory", pathMatch: 'full'},
             {path: "manage-inventory", component: ManageInventoryComponent},
             {path: "sales-history", component: SalesHistoryComponent},
             {path: "sales-analysis", component: SalesAnalysisComponent},
             {path: "supplier-data", component: SupplierDataComponent}
-        ]
+        ], 
     },
-    {path: "", redirectTo: "/home", pathMatch: 'full'}
+    {path: "", redirectTo: "/system/manage-inventory", pathMatch: 'full'}
 ];

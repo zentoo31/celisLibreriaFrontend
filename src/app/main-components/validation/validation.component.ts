@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { ToastComponent } from '../../util-components/toast/toast.component';
 import { ToastService } from '../../services/toast.service';
+import { catchError, map, of } from 'rxjs';
 @Component({
   selector: 'app-validation',
   standalone: true,
@@ -60,6 +61,22 @@ export class ValidationComponent {
     const response = await this.authService.login(formValue);
     this.showToast(response.message);
   }
-  
+
+  isAuth() {
+    this.authService.isAuth().pipe(
+      map(isAuthenticated => {
+        console.log(isAuthenticated); // Aquí se hace el log del valor emitido
+        if (isAuthenticated) {
+          return true;
+        } else {
+          return false;
+        }
+      }),
+      catchError(() => {
+        return of(false);
+      })
+    ).subscribe(result => {
+    });
+  }
 
 }

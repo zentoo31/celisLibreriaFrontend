@@ -1,5 +1,6 @@
 export interface User {
+    id: String,
     nombre: String,
     correo: String,
-    password: String
+    role_id: Number
 }

@@ -63,8 +63,9 @@
                 class="w-full bg-slate-900 text-white py-2 px-4 rounded-md hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-600 focus:ring-opacity-50 disabled:opacity-50"
                 > Iniciar Sesión</button>
             }
-            <a [routerLink]="['/system']">Entrar modo desarrollador</a>
         </form>
+        <a [routerLink]="['/system']">entrar al system</a>
+        <button (click)="isAuth()">Entrar modo desarrollador</button>
     </div>
     <app-toast/>
 </div>
